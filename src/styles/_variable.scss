@@ -1,0 +1,22 @@
+$primary: #ddd;
+$secondary: #491ff0;
+
+$dark-grey: #1e1f29;
+$white: #fff;
+$black: #000;
+$semi-white: #f0f0f0;
+$semi-black: #181818;
+
+$negative: #f44336;
+$warning: #ff9800;
+
+:root {
+  --color-primary: #{$primary};
+  --color-secondary: #{$secondary};
+  --color-negative: #{$negative};
+  --color-warning: #{$warning};
+  --color-dark-grey: #{$dark-grey};
+  --color-white: #{$white};
+  --color-semi-white: #{$semi-white};
+  --color-semi-black: #{$semi-black};
+}
