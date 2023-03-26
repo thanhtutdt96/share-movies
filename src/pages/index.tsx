@@ -1,8 +1,26 @@
+import MovieItem from "components/MovieItem";
+import Loader from "components/ui/Loader";
+import { useGetSharedMoviesQuery } from "redux/services/coreApi";
+
 const Home = () => {
+  const { data: movies, isLoading } = useGetSharedMoviesQuery();
   return (
     <>
       <div className="hero min-h-screen py-7 items-start">
-        <div className="flex-col md:flex-row hero-content flex-wrap gap-y-6">Home page content</div>
+        <div className="hero-content text-center">
+          <div className="lg:w-[800px] max-w-full flex flex-col gap-y-8">
+            {isLoading && <Loader />}
+            {movies?.map((movie) => (
+              <MovieItem
+                title={movie.title}
+                embedId={movie.embedId}
+                email={movie.email}
+                description={movie.description}
+                key={movie.id}
+              />
+            ))}
+          </div>
+        </div>
       </div>
     </>
   );
