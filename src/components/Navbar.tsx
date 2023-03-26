@@ -1,99 +1,61 @@
-import { Dispatch, FC, SetStateAction } from "react";
+import { FC, ReactNode } from "react";
+import { NavLink } from "react-router-dom";
+import { Bars3Icon } from "@heroicons/react/24/solid";
 import logo from "assets/logo.png";
-import { DisplayMode } from "types/Product";
+import { NavbarItem } from "types/Common";
 
 interface Props {
-  displayMode: DisplayMode;
-  setDisplayMode: Dispatch<SetStateAction<DisplayMode>>;
-  setSearchTerm: Dispatch<SetStateAction<string>>;
-  searchTerm: string;
+  navbarItems: NavbarItem[];
+  navbarEnd?: ReactNode;
 }
 
-const navbarItems = [
-  {
-    label: "Default",
-    value: DisplayMode.DEFAULT,
-  },
-  {
-    label: "Off-White",
-    value: DisplayMode.OFF_WHITE,
-  },
-  {
-    label: "Louis Vuitton",
-    value: DisplayMode.LOUIS_VUITTON,
-  },
-  {
-    label: "Shippable to UK",
-    value: DisplayMode.UK_SHIPPABLE,
-  },
-  {
-    label: "Display deposited",
-    value: DisplayMode.DISPLAY_DEPOSITED,
-  },
-];
-
-const Navbar: FC<Props> = ({ displayMode, setDisplayMode, searchTerm, setSearchTerm }) => {
+const Navbar: FC<Props> = ({ navbarItems, navbarEnd }) => {
   return (
     <div className="navbar bg-base-100">
       <div className="navbar-start">
         <div className="dropdown">
           <button className="btn btn-ghost lg:hidden">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h8m-8 6h16"
-              />
-            </svg>
+            <Bars3Icon className="w-6 h-6" />
           </button>
           <ul className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
             {navbarItems.map((item, index) => (
               <li key={index}>
-                <button
-                  className={displayMode === item.value ? "active" : ""}
-                  onClick={() => setDisplayMode(item.value)}
+                <NavLink
+                  to={item.to}
+                  key={item.label}
+                  end
+                  className="flex flex-row justify-start items-center text-sm font-medium text-gray-400 hover:text-cyan-400"
                 >
+                  <item.icon className="w-6 h-6" />
                   {item.label}
-                </button>
+                </NavLink>
               </li>
             ))}
           </ul>
         </div>
-        <div className="btn btn-ghost normal-case text-lg">
+        <div className="btn btn-ghost normal-case text-lg hidden lg:flex items-center">
           <img className="w-6 mr-2" src={logo} alt="Collection" />
-          Collection
+          Funny Movies
         </div>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
           {navbarItems.map((item, index) => (
             <li key={index}>
-              <button
-                className={displayMode === item.value ? "active" : ""}
-                onClick={() => setDisplayMode(item.value)}
+              <NavLink
+                to={item.to}
+                key={item.label}
+                end
+                className="flex flex-row justify-start items-center text-sm font-medium text-gray-400 hover:text-cyan-400"
               >
+                <item.icon className="w-6 h-6" />
                 {item.label}
-              </button>
+              </NavLink>
             </li>
           ))}
         </ul>
       </div>
-      <div className="navbar-end">
-        <input
-          value={searchTerm}
-          type="text"
-          placeholder="Search collection..."
-          className="input input-bordered max-w-xs input-sm"
-          onChange={(event) => setSearchTerm(event.target.value)}
-        />
-      </div>
+      {navbarEnd && <div className="navbar-end">{navbarEnd}</div>}
     </div>
   );
 };

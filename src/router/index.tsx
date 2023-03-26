@@ -1,11 +1,21 @@
 import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "layout/MainLayout";
 import Home from "pages/index";
+import ListMovies from "pages/list-movies";
+import ShareMovie from "pages/share-movie";
 
 const childrenRoutes = [
   {
     path: "/",
     element: <Home />,
+  },
+  {
+    path: "/share-movie",
+    element: <ShareMovie />,
+  },
+  {
+    path: "/list-movies",
+    element: <ListMovies />,
   },
 ];
 
