@@ -7,6 +7,7 @@ interface Props {
   lowerCased?: boolean;
   loading?: boolean;
   className?: string;
+  dataTestId?: string;
   onClick?: () => void;
   children: ReactNode;
 }
@@ -19,6 +20,7 @@ const Button: FC<Props> = ({
   onClick,
   loading,
   className,
+  dataTestId,
 }) => {
   return (
     <button
@@ -26,6 +28,7 @@ const Button: FC<Props> = ({
       className={`btn${outlined ? " btn-outline" : ""} btn-${color} btn-sm${
         lowerCased ? " lowercase" : ""
       }${loading ? " loading" : ""} ${className}`}
+      data-testid={dataTestId}
       onClick={() => onClick?.()}
     >
       {children}

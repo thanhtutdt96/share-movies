@@ -1,4 +1,4 @@
-import { HomeIcon, ListBulletIcon, ShareIcon } from "@heroicons/react/20/solid";
+import { HomeIcon, ShareIcon } from "@heroicons/react/20/solid";
 
 export const API_PATH = import.meta.env.VITE_API_PATH;
 export const YOUTUBE_API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY;
@@ -16,5 +16,5 @@ export const navbarItems = [
     label: "Share Movie",
     to: "/share",
     icon: ShareIcon,
-  }
+  },
 ];

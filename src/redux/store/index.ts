@@ -1,7 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { authApi } from "redux/services/authApi";
 import { coreApi } from "redux/services/coreApi";
-import { youtubeApi } from "redux/services/youtubeApi";
 import { authSlice } from "redux/slices/authSlice";
 
 export const store = configureStore({

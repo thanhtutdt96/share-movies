@@ -111,7 +111,7 @@ const NavbarAuth = () => {
           enableReinitialize
         >
           {() => (
-            <Form>
+            <Form noValidate>
               <div className="flex">
                 <FieldInput
                   inputType="text"
@@ -137,6 +137,7 @@ const NavbarAuth = () => {
                   lowerCased
                   loading={isLoggingIn || isRegistering}
                   className="ml-2"
+                  dataTestId="navbar-auth-login-register"
                 >
                   login/register
                 </Button>

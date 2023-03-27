@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "test": "vitest",
     "preview": "vite preview",
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",
@@ -27,6 +28,7 @@
     "react-toastify": "^9.1.2"
   },
   "devDependencies": {
+    "@testing-library/react": "^14.0.0",
     "@types/react": "^18.0.29",
     "@types/react-dom": "^18.0.11",
     "@types/react-redux": "^7.1.25",
@@ -41,6 +43,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.3.0",
+    "happy-dom": "^8.9.0",
     "husky": "^8.0.3",
     "postcss": "^8.4.21",
     "prettier": "^2.8.7",
@@ -49,7 +52,8 @@
     "typescript": "^5.0.2",
     "vite": "^4.2.1",
     "vite-plugin-eslint": "^1.8.1",
-    "vite-tsconfig-paths": "^4.0.7"
+    "vite-tsconfig-paths": "^4.0.7",
+    "vitest": "^0.29.7"
   },
   "browserslist": {
     "production": [

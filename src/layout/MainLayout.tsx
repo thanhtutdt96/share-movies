@@ -1,7 +1,7 @@
 import { useOutlet } from "react-router";
 import { ToastContainer } from "react-toastify";
-import Navbar from "components/navbar/Navbar";
-import NavbarAuth from "components/navbar/NavbarAuth";
+import Navbar from "components/Navbar/Navbar";
+import NavbarAuth from "components/Navbar/NavbarAuth";
 import { navbarItems } from "assets/constants";
 import "react-toastify/dist/ReactToastify.css";
 

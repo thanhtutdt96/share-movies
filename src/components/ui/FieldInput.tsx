@@ -33,10 +33,15 @@ const FieldInput: FC<Props> = ({
             inputClasses ? inputClasses : ""
           }`}
           placeholder={placeholder}
+          data-testid={`field-input-${entityType}`}
         />
         <ErrorMessage
           name={entityType}
-          render={(errorMessage) => <div className="text-xs text-error mt-1">{errorMessage}</div>}
+          render={(errorMessage) => (
+            <div className="text-xs text-error mt-1" data-testid={`error-message-${entityType}`}>
+              {errorMessage}
+            </div>
+          )}
         />
       </div>
     </div>
