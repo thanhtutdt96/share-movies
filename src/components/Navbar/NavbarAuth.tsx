@@ -1,13 +1,11 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
+import LoginForm from "components/Navbar/LoginForm";
 import Button from "components/ui/Button";
-import FieldInput from "components/ui/FieldInput";
-import { Form, Formik } from "formik";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
 import { useGetUserInfoQuery, useLoginMutation, useRegisterMutation } from "redux/services/authApi";
 import { logout, setToken, setUser } from "redux/slices/authSlice";
-import { VALIDATE_EMAIL_REGEX } from "assets/constants";
 import { AuthSubmitData, User } from "types/Auth";
 
 const NavbarAuth = () => {
@@ -27,29 +25,6 @@ const NavbarAuth = () => {
 
     dispatch(setUser(fetchedUser));
   }, [dispatch, fetchedUser]);
-
-  const initialValues: AuthSubmitData = {
-    email: "",
-    password: "",
-  };
-
-  const validateForm = ({ email, password }: AuthSubmitData) => {
-    const errors: Record<string, string> = {};
-
-    if (!email?.length) {
-      errors.email = "Required";
-    }
-
-    if (!password?.length) {
-      errors.password = "Required";
-    }
-
-    if (!VALIDATE_EMAIL_REGEX.test(email)) {
-      errors.email = "Invalid email";
-    }
-
-    return errors;
-  };
 
   const handleAfterLogin = (user: User, accessToken: string) => {
     toast.success(`Welcome, ${user.email}`);
@@ -92,7 +67,7 @@ const NavbarAuth = () => {
     <>
       {currentUser ? (
         <div className="flex lg:gap-4 items-center">
-          <span>Welcome, {currentUser?.email}</span>
+          <span data-testid="navbar-auth-user">Welcome, {currentUser?.email}</span>
           <div className="flex gap-2 lg:flex-row flex-col">
             <Button color="info" lowerCased outlined onClick={handleShare}>
               share a movie
@@ -104,47 +79,11 @@ const NavbarAuth = () => {
           </div>
         </div>
       ) : (
-        <Formik
-          initialValues={initialValues}
-          validate={validateForm}
-          onSubmit={handleSubmitForm}
-          enableReinitialize
-        >
-          {() => (
-            <Form noValidate>
-              <div className="flex">
-                <FieldInput
-                  inputType="text"
-                  entityType="email"
-                  bordered
-                  placeholder="email"
-                  inputClasses="max-w-xs"
-                />
-
-                <FieldInput
-                  inputType="password"
-                  entityType="password"
-                  bordered
-                  placeholder="password"
-                  inputClasses="max-w-lg"
-                  className="ml-2"
-                />
-
-                <Button
-                  type="submit"
-                  outlined
-                  color="success"
-                  lowerCased
-                  loading={isLoggingIn || isRegistering}
-                  className="ml-2"
-                  dataTestId="navbar-auth-login-register"
-                >
-                  login/register
-                </Button>
-              </div>
-            </Form>
-          )}
-        </Formik>
+        <LoginForm
+          handleSubmitForm={handleSubmitForm}
+          isLoggingIn={isLoggingIn}
+          isRegistering={isRegistering}
+        />
       )}
     </>
   );

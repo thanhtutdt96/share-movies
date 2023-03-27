@@ -4,6 +4,7 @@ Built with Vite, React, Formik, SCSS, TypeScript, Eslint.
 
 ## Running on Local
 ### Development
+- Rename `.env.example` to `.env`
 - Start Vite dev server
 ```
 yarn dev
