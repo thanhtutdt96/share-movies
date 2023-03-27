@@ -3,7 +3,6 @@ import { FC, ReactNode } from "react";
 interface Props {
   type?: "submit" | "reset" | "button" | undefined;
   color?: "primary" | "secondary" | "accent" | "info" | "success" | "warning" | "error" | "ghost";
-  size?: "xs" | "md" | "sm" | "lg";
   outlined?: boolean;
   lowerCased?: boolean;
   loading?: boolean;
@@ -16,7 +15,6 @@ const Button: FC<Props> = ({
   children,
   outlined,
   color,
-  size = "sm",
   lowerCased,
   onClick,
   loading,
@@ -25,7 +23,7 @@ const Button: FC<Props> = ({
   return (
     <button
       type={type}
-      className={`btn${outlined ? " btn-outline" : ""} btn-${color} btn-${size}${
+      className={`btn${outlined ? " btn-outline" : ""} btn-${color} btn-sm${
         lowerCased ? " lowercase" : ""
       }${loading ? " loading" : ""} ${className}`}
       onClick={() => onClick?.()}

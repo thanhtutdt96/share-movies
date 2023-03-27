@@ -13,8 +13,8 @@ import { AuthSubmitData, User } from "types/Auth";
 const NavbarAuth = () => {
   const navigate = useNavigate();
 
-  const [login] = useLoginMutation();
-  const [register] = useRegisterMutation();
+  const [login, { isLoading: isLoggingIn }] = useLoginMutation();
+  const [register, { isLoading: isRegistering }] = useRegisterMutation();
   const { data: fetchedUser } = useGetUserInfoQuery();
 
   const currentUser = useAppSelector<User | null>((state) => state.auth.user);
@@ -94,11 +94,11 @@ const NavbarAuth = () => {
         <div className="flex lg:gap-4 items-center">
           <span>Welcome, {currentUser?.email}</span>
           <div className="flex gap-2 lg:flex-row flex-col">
-            <Button size="sm" color="info" lowerCased outlined onClick={handleShare}>
+            <Button color="info" lowerCased outlined onClick={handleShare}>
               share a movie
             </Button>
 
-            <Button size="sm" color="error" lowerCased outlined onClick={handleLogout}>
+            <Button color="error" lowerCased outlined onClick={handleLogout}>
               logout
             </Button>
           </div>
@@ -117,7 +117,6 @@ const NavbarAuth = () => {
                   inputType="text"
                   entityType="email"
                   bordered
-                  size="sm"
                   placeholder="email"
                   inputClasses="max-w-xs"
                 />
@@ -126,7 +125,6 @@ const NavbarAuth = () => {
                   inputType="password"
                   entityType="password"
                   bordered
-                  size="sm"
                   placeholder="password"
                   inputClasses="max-w-lg"
                   className="ml-2"
@@ -136,8 +134,8 @@ const NavbarAuth = () => {
                   type="submit"
                   outlined
                   color="success"
-                  size="sm"
                   lowerCased
+                  loading={isLoggingIn || isRegistering}
                   className="ml-2"
                 >
                   login/register

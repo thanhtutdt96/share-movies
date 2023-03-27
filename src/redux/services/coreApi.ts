@@ -1,8 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { RootState } from "redux/store";
 import { API_PATH } from "assets/constants";
-import { AuthResponse, AuthSubmitData, User } from "types/Auth";
-import { ApiTagType, MovieItem } from "types/Common";
+import { ApiTagType, MovieItem, MovieSubmitData } from "types/Common";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: API_PATH,
@@ -25,11 +24,11 @@ export const coreApi = createApi({
   baseQuery,
   tagTypes: [ApiTagType.CORE],
   endpoints: (builder) => ({
-    createSharedMovie: builder.mutation<AuthResponse, AuthSubmitData>({
-      query: ({ email, password }) => ({
+    createSharedMovie: builder.mutation<MovieItem, MovieSubmitData>({
+      query: ({ title, description, embedId, email }) => ({
         url: "/shared-movies",
         method: "POST",
-        body: { email, password },
+        body: { title, description, embedId, email },
       }),
       invalidatesTags: [ApiTagType.CORE],
     }),

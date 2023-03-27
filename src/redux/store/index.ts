@@ -1,18 +1,18 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { authApi } from "redux/services/authApi";
 import { coreApi } from "redux/services/coreApi";
+import { youtubeApi } from "redux/services/youtubeApi";
 import { authSlice } from "redux/slices/authSlice";
-import { toastSlice } from "redux/slices/toastSlice";
 
 export const store = configureStore({
   reducer: {
     [coreApi.reducerPath]: coreApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
-    toast: toastSlice.reducer,
+    [youtubeApi.reducerPath]: youtubeApi.reducer,
     auth: authSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(coreApi.middleware, authApi.middleware),
+    getDefaultMiddleware().concat(coreApi.middleware, authApi.middleware, youtubeApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>; // A global type to access reducers types

@@ -24,3 +24,18 @@ export interface MovieItem {
   description?: string;
   userId: number;
 }
+
+export type MovieSubmitData = Pick<MovieItem, "title" | "embedId" | "description" | "email">;
+
+interface YoutubeMovieSnippet {
+  title: string;
+  description: string;
+}
+
+interface YoutubeMovieItem {
+  id: string;
+  snippet: YoutubeMovieSnippet;
+}
+export interface YoutubeMovieResponse {
+  items: YoutubeMovieItem[];
+}
