@@ -11,7 +11,7 @@ yarn dev
 - Open browser with url http://127.0.0.1:5173/
 ### Unit Test
 ```
-yarn test:unit
+yarn test
 ```
 ### Linting / Format
 ```
@@ -23,9 +23,9 @@ yarn format
 
 The following functionalities are implemented:
 
-- [x] Register/login form.
-- [x] Share movies.
-- [x] List shared movies.
+- [x] User can register/login the app.
+- [x] User can share movie after login successfully.
+- [x] User can see the list of shared movies.
 
 ## License
 
