@@ -1,4 +1,4 @@
-import { FC, ReactNode } from "react";
+import { FC, memo, ReactNode } from "react";
 
 interface Props {
   type?: "submit" | "reset" | "button" | undefined;
@@ -33,4 +33,4 @@ const Button: FC<Props> = ({
   );
 };
 
-export default Button;
+export default memo(Button);

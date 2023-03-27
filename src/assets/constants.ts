@@ -14,12 +14,7 @@ export const navbarItems = [
   },
   {
     label: "Share Movie",
-    to: "/share-movie",
+    to: "/share",
     icon: ShareIcon,
-  },
-  {
-    label: "List Movie",
-    to: "/list-movies",
-    icon: ListBulletIcon,
-  },
+  }
 ];

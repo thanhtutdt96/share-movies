@@ -85,7 +85,7 @@ const NavbarAuth = () => {
   };
 
   const handleShare = () => {
-    navigate("/share-movie");
+    navigate("/share");
   };
 
   return (

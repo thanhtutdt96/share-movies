@@ -5,17 +5,18 @@ import MovieItem from "components/MovieItem";
 import Button from "components/ui/Button";
 import FieldInput from "components/ui/FieldInput";
 import { Form, Formik, FormikHelpers } from "formik";
-import { useAppSelector } from "redux/hooks";
+import { useAppDispatch, useAppSelector } from "redux/hooks";
 import { useCreateSharedMovieMutation } from "redux/services/coreApi";
-import { useLazyGetYoutubeMovieInfoQuery } from "redux/services/youtubeApi";
+import youtubeApi from "redux/services/youtubeApi";
+import { logout } from "redux/slices/authSlice";
 import useMovieHelper from "hooks/useMovieHelper";
-import { MovieSubmitData } from "types/Common";
+import { MovieSubmitData, YoutubeMovieResponse } from "types/Common";
 
 const ShareMovie = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const currentUser = useAppSelector((state) => state.auth.user);
 
-  const [query, { isLoading: isFetching }] = useLazyGetYoutubeMovieInfoQuery();
   const [createSharedMovie, { isLoading: isSubmitting }] = useCreateSharedMovieMutation();
   const { getVideoIdFromUrl, truncateText } = useMovieHelper();
 
@@ -25,26 +26,33 @@ const ShareMovie = () => {
     url: "",
   };
 
-  const validateForm = ({ url }: { url: string }) => {
+  const validateForm = async ({ url }: { url: string }) => {
     const errors: Record<string, string> = {};
 
     if (!url?.length) {
       errors.url = "Required";
+
+      return errors;
     }
 
     const movieId = getVideoIdFromUrl(url);
 
     if (!movieId) {
       errors.url = "Invalid youtube url";
+      setMovieInfo(null);
 
       return errors;
     }
 
     if (movieId) {
-      query(movieId)
-        .unwrap()
+      await youtubeApi
+        .get<YoutubeMovieResponse>("/videos", { params: { id: movieId } })
         .then((response) => {
-          const movie = response.items[0];
+          if (!response?.data) {
+            return;
+          }
+
+          const movie = response.data.items[0];
 
           setMovieInfo({
             title: movie.snippet.title,
@@ -53,7 +61,9 @@ const ShareMovie = () => {
             email: currentUser?.email ?? "",
           });
         })
-        .catch((error) => toast.error(error));
+        .catch((error) => {
+          toast.error(error.message);
+        });
     }
 
     return errors;
@@ -73,9 +83,18 @@ const ShareMovie = () => {
       .then(() => {
         toast.success("Movie shared successfully");
         resetForm();
-        setMovieInfo(null);
       })
-      .catch((error) => toast.error(error));
+      .catch((error) => {
+        const errorMessage = error.data ?? error.message;
+
+        toast.error(errorMessage);
+
+        if (errorMessage === "jwt expired") {
+          dispatch(logout());
+
+          navigate("/");
+        }
+      });
   };
 
   const handleBackToList = useCallback(() => {
@@ -91,6 +110,7 @@ const ShareMovie = () => {
             validateOnChange={true}
             validate={validateForm}
             onSubmit={handleSubmitForm}
+            onReset={() => setMovieInfo(null)}
             enableReinitialize
           >
             {() => (
@@ -120,7 +140,7 @@ const ShareMovie = () => {
                   <div className="grid grid-cols-3">
                     <div className="flex flex-col gap-4 mt-6 col-start-2 col-end-4">
                       <Button
-                        loading={isFetching || isSubmitting}
+                        loading={isSubmitting}
                         type="submit"
                         outlined
                         color="success"
