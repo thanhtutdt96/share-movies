@@ -9,8 +9,6 @@ interface PrivateRouteProps {
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ element }) => {
   const currentUser = useAppSelector((state) => state.auth.user);
 
-  console.log(element);
-
   return <>{currentUser ? element : <Navigate to="/" replace />}</>;
 };
 

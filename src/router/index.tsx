@@ -15,7 +15,7 @@ const childrenRoutes = [
   },
 ];
 
-const routes = [
+export const routes = [
   {
     path: "/",
     element: <MainLayout />,

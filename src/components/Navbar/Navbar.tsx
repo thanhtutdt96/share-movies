@@ -60,7 +60,11 @@ const Navbar: FC<Props> = ({ navbarItems, isNavigationMenuVisible = true, navbar
           </ul>
         </div>
       )}
-      {navbarEnd && <div className="navbar-end w-auto">{navbarEnd}</div>}
+      {navbarEnd && (
+        <div className="navbar-end w-auto" data-testid="navbar-end">
+          {navbarEnd}
+        </div>
+      )}
     </div>
   );
 };

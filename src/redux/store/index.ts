@@ -1,17 +1,27 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore, PreloadedState } from "@reduxjs/toolkit";
 import { authApi } from "redux/services/authApi";
 import { coreApi } from "redux/services/coreApi";
 import { authSlice } from "redux/slices/authSlice";
 
-export const store = configureStore({
-  reducer: {
-    [coreApi.reducerPath]: coreApi.reducer,
-    [authApi.reducerPath]: authApi.reducer,
-    auth: authSlice.reducer,
-  },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(coreApi.middleware, authApi.middleware),
+const rootReducer = combineReducers({
+  [coreApi.reducerPath]: coreApi.reducer,
+  [authApi.reducerPath]: authApi.reducer,
+  auth: authSlice.reducer,
 });
 
-export type RootState = ReturnType<typeof store.getState>; // A global type to access reducers types
-export type AppDispatch = typeof store.dispatch; // Type to access dispatch
+export const store = (preloadedState?: PreloadedState<RootState>) => {
+  return configureStore({
+    reducer: {
+      [coreApi.reducerPath]: coreApi.reducer,
+      [authApi.reducerPath]: authApi.reducer,
+      auth: authSlice.reducer,
+    },
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().concat(coreApi.middleware, authApi.middleware),
+    preloadedState,
+  });
+};
+
+export type RootState = ReturnType<typeof rootReducer>; // A global type to access reducers types
+export type AppStore = ReturnType<typeof store>;
+export type AppDispatch = AppStore["dispatch"];

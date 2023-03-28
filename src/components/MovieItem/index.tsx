@@ -10,7 +10,10 @@ interface Props {
 }
 const MovieItem: FC<Props> = ({ title, embedId, email, description, className }) => {
   return (
-    <div className={`grid lg:grid-cols-2 gap-x-8 items-center ${className ? className : ""}`}>
+    <div
+      className={`grid lg:grid-cols-2 gap-x-8 items-center ${className ? className : ""}`}
+      data-testid="movie-item"
+    >
       <MovieItemVideo embedId={embedId} title={title} />
       <div className="flex flex-col text-left mt-3 lg:mt-0 self-start">
         <h3 className="text-secondary font-bold text-lg">{title}</h3>
